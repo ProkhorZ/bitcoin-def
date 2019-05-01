@@ -37,23 +37,14 @@ aims to achieve this goal by implementing a series of optimizations and
 protocol upgrades that will enable peer-to-peer digital cash to scale many
 orders of magnitude beyond current limits.
 
+Development Process
+-------------------
+
+The Bitcoin ABC Github repository contains only source code of releases. Bitcoin ABC development takes place at https://reviews.bitcoinabc.org/
+
 License
 -------
 
 DEF Cash and Bitcoin ABC are released under the terms of the MIT license. See
 [COPYING](COPYING) for more information or see
 https://opensource.org/licenses/MIT.
-
-Development Process
--------------------
-
-The Bitcoin ABC Github repository contains only source code of releases.
-
-Bitcoin ABC development takes place at https://reviews.bitcoinabc.org/
-
-If you would like to contribute, please read [CONTRIBUTING](CONTRIBUTING.md).
-
-Disclosure Policy
------------------
-
-See [DISCLOSURE_POLICY](DISCLOSURE_POLICY.md)
