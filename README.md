@@ -1,7 +1,7 @@
 DEF Cash
 ===========
 DEF Cash is an experiment in on-chain scaling. It's a code fork of Bitcoin ABC, but it will create a new blockchain 
-with different economic parameters. DEF Cash will adopt features that are suitable for a peer-to-peer electronic 
+with different economic parameters. DEF means Decentralized Economic Future, of course. DEF Cash will adopt features that are suitable for a peer-to-peer electronic 
 cash system, but too different from the Bitcoin tradition to be applied in Bitcoin Cash:
 + A dynamic blocksize as in Monero
 + A faster blocktime
