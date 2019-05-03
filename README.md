@@ -9,6 +9,7 @@ cash system, but too different from the Bitcoin tradition to be applied in Bitco
 + An ASIC-resistant proof of work algorithm, or multiple algorithms (maybe supported with proof-of-proof)
 + Maybe a [dynamic blocktime](https://bitcointalk.org/index.php?topic=79837.0) if that's possible, but I'm just making this up while I'm writing this down
 + Maybe some features from the [Bitcoin Hardfork Wishlist](https://en.bitcoin.it/wiki/Hardfork_Wishlist#Major_structural_changes) if someone wants to implement them
++ Fix the [Merkle tree ambiguity bug](https://github.com/bitcoin/bitcoin/blob/master/src/consensus/merkle.cpp)
 
 DEF Cash also the developer's first C++ project.
 
