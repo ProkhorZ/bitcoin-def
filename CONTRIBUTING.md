@@ -1,3 +1,11 @@
+Contributing to DEF Cash
+------------------------
+
+Please don't contribute here! This is just a practice fork.
+
+I'm keeping the Bitcoin ABC contributor guide for my own information.
+
+
 Contributing to Bitcoin ABC
 ===========================
 
