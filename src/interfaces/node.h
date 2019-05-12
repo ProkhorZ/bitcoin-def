@@ -5,6 +5,8 @@
 #ifndef BITCOIN_INTERFACES_NODE_H
 #define BITCOIN_INTERFACES_NODE_H
 
+#include <addrdb.h>     // For banmap_t
+#include <amount.h>     // For Amount
 #include <init.h>       // For HelpMessageMode
 #include <net.h>        // For CConnman::NumConnections
 #include <netaddress.h> // For Network
@@ -14,11 +16,20 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <tuple>
+#include <vector>
 
+class CCoinControl;
+class CFeeRate;
+struct CNodeStateStats;
+struct CNodeStats;
+class Coin;
 class Config;
 class HTTPRPCRequestProcessor;
 class proxyType;
 class RPCServer;
+class RPCTimerInterface;
+class UniValue;
 
 namespace interfaces {
 
@@ -45,6 +56,9 @@ public:
 
     //! Choose network parameters.
     virtual void selectParams(const std::string &network) = 0;
+
+    //! Get network name.
+    virtual std::string getNetwork() = 0;
 
     //! Init logging.
     virtual void initLogging() = 0;
@@ -84,6 +98,24 @@ public:
     //! Get number of connections.
     virtual size_t getNodeCount(CConnman::NumConnections flags) = 0;
 
+    //! Get stats for connected nodes.
+    using NodesStats =
+        std::vector<std::tuple<CNodeStats, bool, CNodeStateStats>>;
+    virtual bool getNodesStats(NodesStats &stats) = 0;
+
+    //! Get ban map entries.
+    virtual bool getBanned(banmap_t &banmap) = 0;
+
+    //! Ban node.
+    virtual bool ban(const CNetAddr &net_addr, BanReason reason,
+                     int64_t ban_time_offset) = 0;
+
+    //! Unban node.
+    virtual bool unban(const CSubNet &ip) = 0;
+
+    //! Disconnect node.
+    virtual bool disconnect(NodeId id) = 0;
+
     //! Get total bytes recv.
     virtual int64_t getTotalBytesRecv() = 0;
 
@@ -122,6 +154,51 @@ public:
 
     //! Get network active.
     virtual bool getNetworkActive() = 0;
+
+    //! Get minimum fee.
+    virtual Amount getMinimumFee(unsigned int tx_bytes) = 0;
+
+    //! Get minimum fee with coin control.
+    virtual Amount getMinimumFee(unsigned int tx_bytes,
+                                 const CCoinControl &coin_control) = 0;
+
+    //! Get max tx fee.
+    virtual Amount getMaxTxFee() = 0;
+
+    //! Estimate smart fee.
+    virtual CFeeRate estimateSmartFee() = 0;
+
+    //! Get dust relay fee.
+    virtual CFeeRate getDustRelayFee() = 0;
+
+    //! Get fallback fee.
+    virtual CFeeRate getFallbackFee() = 0;
+
+    //! Get pay tx fee.
+    virtual CFeeRate getPayTxFee() = 0;
+
+    //! Set pay tx fee.
+    virtual void setPayTxFee(CFeeRate rate) = 0;
+
+    //! Execute rpc command.
+    virtual UniValue executeRpc(Config &config, const std::string &command,
+                                const UniValue &params,
+                                const std::string &uri) = 0;
+
+    //! List rpc commands.
+    virtual std::vector<std::string> listRpcCommands() = 0;
+
+    //! Set RPC timer interface if unset.
+    virtual void rpcSetTimerInterfaceIfUnset(RPCTimerInterface *iface) = 0;
+
+    //! Unset RPC timer interface.
+    virtual void rpcUnsetTimerInterface(RPCTimerInterface *iface) = 0;
+
+    //! Get unspent outputs associated with a transaction.
+    virtual bool getUnspentOutput(const COutPoint &output, Coin &coin) = 0;
+
+    //! Return interfaces for accessing wallets (if any).
+    virtual std::vector<std::unique_ptr<Wallet>> getWallets() = 0;
 
     //! Register handler for init messages.
     using InitMessageFn = std::function<void(const std::string &message)>;
